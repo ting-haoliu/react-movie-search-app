@@ -88,52 +88,76 @@ const App = () => {
   }, []);
 
   return (
-    <main>
-      <div className="pattern" />
+    <>
+      <main>
+        <div className="pattern" />
 
-      <div className="wrapper">
-        <header>
-          <img src="./hero.png" alt="Hero Banner" />
-          <h1>
-            Find <span className="text-gradient">Movies</span> You'll Enjoy
-            Without the Hassle
-          </h1>
+        <div className="wrapper">
+          <header>
+            <img src="./hero.png" alt="Hero Banner" />
+            <h1>
+              Find <span className="text-gradient">Movies</span> You'll Enjoy
+              Without the Hassle
+            </h1>
 
-          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        </header>
+            <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          </header>
 
-        {trendingMovies.length > 0 && (
-          <section className="trending">
-            <h2>Trending Movies</h2>
+          {trendingMovies.length > 0 && (
+            <section className="trending">
+              <h2>Trending Movies</h2>
 
-            <ul>
-              {trendingMovies.map((movie, index) => (
-                <li key={movie.$id}>
-                  <p>{index + 1}</p>
-                  <img src={movie.poster_url} alt={movie.title} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        <section className="all-movies">
-          <h2 className="mt-10">All Movies</h2>
-
-          {isLoading ? (
-            <Spinner />
-          ) : errorMessage ? (
-            <p className="text-red-500">{errorMessage}</p>
-          ) : (
-            <ul>
-              {movieList.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </ul>
+              <ul>
+                {trendingMovies.map((movie, index) => (
+                  <li key={movie.$id}>
+                    <p>{index + 1}</p>
+                    <img src={movie.poster_url} alt={movie.title} />
+                  </li>
+                ))}
+              </ul>
+            </section>
           )}
-        </section>
-      </div>
-    </main>
+
+          <section className="all-movies">
+            <h2 className="mt-10">All Movies</h2>
+
+            {isLoading ? (
+              <Spinner />
+            ) : errorMessage ? (
+              <p className="text-red-500">{errorMessage}</p>
+            ) : (
+              <ul>
+                {movieList.map((movie) => (
+                  <MovieCard key={movie.id} movie={movie} />
+                ))}
+              </ul>
+            )}
+          </section>
+        </div>
+      </main>
+
+      <footer className="flex justify-between p-4">
+        <p className="text-center text-sm text-gray-500">
+          &copy; {new Date().getFullYear()} Adam Liu. All rights reserved.
+        </p>
+        <div className="flex space-x-4">
+          <a
+            className="text-center text-sm text-gray-500"
+            href="https://github.com/ting-haoliu/react-movie_searching"
+            target="_blank"
+          >
+            View on GitHub
+          </a>
+          <a
+            className="text-center text-sm text-gray-500"
+            href="https://www.linkedin.com/in/tinghao-liu/"
+            target="_blank"
+          >
+            View on LinkedIn
+          </a>
+        </div>
+      </footer>
+    </>
   );
 };
 
