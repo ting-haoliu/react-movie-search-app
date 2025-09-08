@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const MovieCard = ({
   movie: { title, poster_path, vote_average, original_language, release_date },
 }) => {
