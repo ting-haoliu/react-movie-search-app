@@ -58,7 +58,7 @@ Deployed on **Vercel**:
 ![Trending Screenshot](screenshots/Trending.png)
 
 ### Movie Details
-![Movie Detail Screenshot](screenshots/detail.png)
+![Movie Detail Screenshot](screenshots/Detail.png)
 
 ## License
 MIT License
