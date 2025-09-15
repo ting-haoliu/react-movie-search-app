@@ -1,12 +1,57 @@
-# React + Vite
+# 🎬 React Movie Searching Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A movie searching website built with **React** and **TMDB API**, featuring search, popular movies, trending movies, and detailed movie information.  
+Deployed on **Vercel**:  
+👉 [Live Demo](https://react-movie-searching.vercel.app/)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Movie Search**: Search for movies from the TMDB database by keyword.  
+- **Popular Movies**: Homepage displays the top 20 most popular movies.  
+- **Trending Movies**: Shows this week's trending movies.  
+- **Movie Detail Page**: Click on any movie card to view detailed information, including:
+  - Title  
+  - Runtime  
+  - Release Date  
+  - Rating  
+  - Overview  
+  - Genres  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+
+- **React**  
+- **React Router**  
+- **Tailwind CSS**  
+- **TMDB API** ([The Movie Database](https://www.themoviedb.org/documentation/api))  
+- **Vercel** (Deployment)
+
+---
+
+## Installation & Usage
+
+1. **Clone the repo**
+    ```bash
+    git clone git@github.com:ting-haoliu/react-movie_searching.git
+    cd react-movie_searching
+
+2. **Install dependencies**
+    ```bash
+    npm install
+
+3. **Set up environment variables**
+    Create a .env file in the root directory and add your TMDB API key:
+    ```bash
+    VITE_TMDB_API_KEY=your_tmdb_api_key
+
+4. **Run the development server**
+    ```bash
+    npm run dev
+
+## Screenshots
+
+## License
+MIT License
