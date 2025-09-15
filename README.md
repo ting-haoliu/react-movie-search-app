@@ -39,21 +39,26 @@ Deployed on **Vercel**:
     ```bash
     git clone git@github.com:ting-haoliu/react-movie_searching.git
     cd react-movie_searching
-
 2. **Install dependencies**
     ```bash
     npm install
-
 3. **Set up environment variables**
     Create a .env file in the root directory and add your TMDB API key:
     ```bash
     VITE_TMDB_API_KEY=your_tmdb_api_key
-
 4. **Run the development server**
     ```bash
     npm run dev
-
 ## Screenshots
+
+### Homepage
+![Homepage Screenshot](screenshots/Homepage.png)
+
+### Trending
+![Trending Screenshot](screenshots/Trending.png)
+
+### Movie Details
+![Movie Detail Screenshot](screenshots/detail.png)
 
 ## License
 MIT License
