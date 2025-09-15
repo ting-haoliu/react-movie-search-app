@@ -8,7 +8,8 @@ Deployed on **Vercel**:
 
 ## Features
 
-- **Movie Search**: Search for movies from the TMDB database by keyword.  
+- **Movie Search**: Search for movies from the TMDB database by keyword.
+    - Optimized with **debounce** to reduce unnecessary API requests and improve performance.
 - **Popular Movies**: Homepage displays the top 20 most popular movies.  
 - **Trending Movies**: Shows this week's trending movies.  
 - **Movie Detail Page**: Click on any movie card to view detailed information, including:
@@ -17,7 +18,8 @@ Deployed on **Vercel**:
   - Release Date  
   - Rating  
   - Overview  
-  - Genres  
+  - Genres
+- **Responsive Web Design (RWD)**: Fully responsive layout that works seamlessly on desktops, tablets, and mobile devices.
 
 ---
 
