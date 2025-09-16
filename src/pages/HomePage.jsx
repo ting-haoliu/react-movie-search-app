@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDebounce } from 'react-use';
 import { Link } from 'react-router-dom';
 
+import TrendingCarousel from '../components/TrendingCarousel';
 import Search from '../components/Search';
 import Spinner from '../components/Spinner';
 import MovieCard from '../components/MovieCard';
@@ -80,7 +81,7 @@ const HomePage = () => {
          }
 
          const data = await response.json();
-         const movies = data.results.slice(0, 10);
+         const movies = data.results.slice(0, 10); // Get top 5 trending movies
          console.log(movies);
 
          setTrendingMovies(movies);
@@ -100,7 +101,7 @@ const HomePage = () => {
    return (
       <>
          <main>
-            <div className="pattern" />
+            <div className="bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0" />
 
             <div className="wrapper">
                <header>
@@ -116,30 +117,7 @@ const HomePage = () => {
                   />
                </header>
 
-               {trendingMovies.length > 0 && (
-                  <section className="trending">
-                     <h2>Trending This Week</h2>
-
-                     <ol>
-                        {trendingMovies.map((movie, index) => (
-                           <li key={movie.id}>
-                              <p>{index + 1}</p>
-                              <Link to={`/movie/${movie.id}`}>
-                                 <img
-                                    src={
-                                       movie.poster_path
-                                          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                                          : '/No-Poster.png'
-                                    }
-                                    alt={`Poster of ${movie.title}`}
-                                 />
-                                 <span className="sr-only">{movie.title}</span>
-                              </Link>
-                           </li>
-                        ))}
-                     </ol>
-                  </section>
-               )}
+               <TrendingCarousel trendingMovies={trendingMovies} />
 
                <section className="all-movies">
                   <h2 className="mt-10">All Movies</h2>
