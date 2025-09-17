@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'react-use';
-import { Link } from 'react-router-dom';
 
 import TrendingCarousel from '../components/TrendingCarousel';
 import Search from '../components/Search';

@@ -21,7 +21,12 @@
 }
 
 @layer base {
+  html {
+    overflow-x: hidden;
+  }
+
   body {
+    overflow-x: hidden;
     font-family: "DM Sans", serif;
     font-optical-sizing: auto;
     background: #030014;
