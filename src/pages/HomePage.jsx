@@ -5,17 +5,8 @@ import TrendingCarousel from '../components/TrendingCarousel';
 import Search from '../components/Search';
 import Spinner from '../components/Spinner';
 import MovieCard from '../components/MovieCard';
-import { updateSearchCount } from '../appwrite';
 
-const API_URL = 'https://api.themoviedb.org/3';
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-const API_OPTIONS = {
-   method: 'GET',
-   headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${API_KEY}`,
-   },
-};
+import { fetchMovies, fetchTrendingMovies } from '../services/tmdb';
 
 const HomePage = () => {
    const [searchTerm, setSearchTerm] = useState('');
@@ -35,22 +26,12 @@ const HomePage = () => {
       [searchTerm]
    );
 
-   const fetchMovies = async (query = '') => {
+   const loadMovies = async (query = '') => {
       setIsLoading(true);
       setErrorMessage('');
 
       try {
-         const endpoint = query
-            ? `${API_URL}/search/movie?query=${encodeURIComponent(query)}`
-            : `${API_URL}/discover/movie?sort_by=popularity.desc`;
-
-         const response = await fetch(endpoint, API_OPTIONS);
-         if (!response.ok) {
-            throw new Error('Network response was not ok');
-         }
-
-         const data = await response.json();
-         console.log(data);
+         const data = await fetchMovies(query);
 
          if (!data.results || data.results.length === 0) {
             setErrorMessage('No movies found');
@@ -59,10 +40,6 @@ const HomePage = () => {
          }
 
          setMovieList(data.results);
-
-         if (query && data.results.length > 0) {
-            await updateSearchCount(query, data.results[0]);
-         }
       } catch (error) {
          console.error('Error fetching movies:', error);
          setErrorMessage('Failed to fetch movies, Please try again later.');
@@ -73,15 +50,8 @@ const HomePage = () => {
 
    const loadTrendingMovies = async () => {
       try {
-         const endpoint = `${API_URL}/trending/movie/week`;
-         const response = await fetch(endpoint, API_OPTIONS);
-         if (!response.ok) {
-            throw new Error('Network response was not ok');
-         }
-
-         const data = await response.json();
-         const movies = data.results.slice(0, 10); // Get top 5 trending movies
-         console.log(movies);
+         const data = await fetchTrendingMovies();
+         const movies = data.results.slice(0, 10); // Get top 10 trending movies
 
          setTrendingMovies(movies);
       } catch (error) {
@@ -90,7 +60,7 @@ const HomePage = () => {
    };
 
    useEffect(() => {
-      fetchMovies(debounceSearchTerm);
+      loadMovies(debounceSearchTerm);
    }, [debounceSearchTerm]);
 
    useEffect(() => {

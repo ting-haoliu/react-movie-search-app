@@ -3,15 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import Spinner from '../components/Spinner';
 
-const API_URL = 'https://api.themoviedb.org/3';
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-const API_OPTIONS = {
-   method: 'GET',
-   headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${API_KEY}`,
-   },
-};
+import { fetchMovieById } from '../services/tmdb';
 
 const MovieDetailPage = () => {
    const { id } = useParams();
@@ -19,23 +11,12 @@ const MovieDetailPage = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [errorMessage, setErrorMessage] = useState('');
 
-   const fetchMovieById = async (id) => {
+   const loadMovieById = async (id) => {
       setIsLoading(true);
       setErrorMessage('');
 
       try {
-         const endpoint = `${API_URL}/movie/${id}`;
-
-         const response = await fetch(endpoint, API_OPTIONS);
-         if (!response.ok) {
-            if (response.status === 404) {
-               throw new Error('Movie not found');
-            }
-            throw new Error('Failed to fetch movie');
-         }
-
-         const data = await response.json();
-         console.log(data);
+         const data = await fetchMovieById(id);
 
          setMovie(data);
       } catch (error) {
@@ -51,7 +32,7 @@ const MovieDetailPage = () => {
    };
 
    useEffect(() => {
-      fetchMovieById(id);
+      loadMovieById(id);
    }, [id]);
 
    return (
