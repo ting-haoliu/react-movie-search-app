@@ -5,7 +5,6 @@ import Carousel from '../components/Carousel';
 import Search from '../components/Search';
 import Spinner from '../components/Spinner';
 import MovieCard from '../components/MovieCard';
-import Footer from '../components/Footer';
 
 import { fetchMovies, fetchTrendingMovies } from '../services/tmdb';
 
@@ -70,57 +69,50 @@ const HomePage = () => {
 
    return (
       <>
-         <main>
-            <div className="bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0" />
+         <div className="bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0" />
 
-            <div className="wrapper">
-               <header>
-                  <img src="./hero.png" alt="Hero Banner" />
-                  <h1>
-                     Find <span className="text-gradient">Movies</span> You'll
-                     Enjoy Without the Hassle
-                  </h1>
+         <div className="wrapper">
+            <header>
+               <img src="./hero.png" alt="Hero Banner" />
+               <h1>
+                  Find <span className="text-gradient">Movies</span> You'll
+                  Enjoy Without the Hassle
+               </h1>
 
-                  <Search
-                     searchTerm={searchTerm}
-                     setSearchTerm={setSearchTerm}
-                  />
-               </header>
+               <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            </header>
 
-               <section className="mt-20">
-                  <h2>Trending This Week</h2>
+            <section className="mt-20">
+               <h2>Trending This Week</h2>
 
-                  <ol className="flex flex-row overflow-x-auto w-full hide-scrollbar">
-                     {trendingMovies.map((movie, index) => (
-                        <Carousel
-                           key={movie.id}
-                           trendingMovies={trendingMovies}
-                           movie={movie}
-                           index={index}
-                        />
+               <ol className="flex flex-row overflow-x-auto w-full hide-scrollbar">
+                  {trendingMovies.map((movie, index) => (
+                     <Carousel
+                        key={movie.id}
+                        trendingMovies={trendingMovies}
+                        movie={movie}
+                        index={index}
+                     />
+                  ))}
+               </ol>
+            </section>
+
+            <section className="all-movies">
+               <h2 className="mt-10">All Movies</h2>
+
+               {isLoading ? (
+                  <Spinner />
+               ) : errorMessage ? (
+                  <p className="text-red-500">{errorMessage}</p>
+               ) : (
+                  <ul>
+                     {movieList.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie} />
                      ))}
-                  </ol>
-               </section>
-
-               <section className="all-movies">
-                  <h2 className="mt-10">All Movies</h2>
-
-                  {isLoading ? (
-                     <Spinner />
-                  ) : errorMessage ? (
-                     <p className="text-red-500">{errorMessage}</p>
-                  ) : (
-                     <ul>
-                        {movieList.map((movie) => (
-                           <MovieCard key={movie.id} movie={movie} />
-                        ))}
-                     </ul>
-                  )}
-               </section>
-            </div>
-         </main>
-
-         <Footer />
+                  </ul>
+               )}
+            </section>
+         </div>
       </>
    );
 };

@@ -36,7 +36,7 @@ const MovieDetailPage = () => {
    }, [id]);
 
    return (
-      <main>
+      <>
          {isLoading ? (
             <Spinner />
          ) : errorMessage ? (
@@ -121,7 +121,7 @@ const MovieDetailPage = () => {
                </div>
             )
          )}
-      </main>
+      </>
    );
 };
 
