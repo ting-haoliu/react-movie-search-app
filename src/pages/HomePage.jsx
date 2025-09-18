@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'react-use';
 
-import TrendingCarousel from '../components/TrendingCarousel';
+import Carousel from '../components/Carousel';
 import Search from '../components/Search';
 import Spinner from '../components/Spinner';
 import MovieCard from '../components/MovieCard';
@@ -86,7 +86,20 @@ const HomePage = () => {
                   />
                </header>
 
-               <TrendingCarousel trendingMovies={trendingMovies} />
+               <section className="mt-20">
+                  <h2>Trending This Week</h2>
+
+                  <ol className="flex flex-row overflow-x-auto w-full hide-scrollbar">
+                     {trendingMovies.map((movie, index) => (
+                        <Carousel
+                           key={movie.id}
+                           trendingMovies={trendingMovies}
+                           movie={movie}
+                           index={index}
+                        />
+                     ))}
+                  </ol>
+               </section>
 
                <section className="all-movies">
                   <h2 className="mt-10">All Movies</h2>
