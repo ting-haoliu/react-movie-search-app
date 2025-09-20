@@ -4,6 +4,7 @@ import { useDebounce } from 'react-use';
 import Carousel from '../components/Carousel';
 import Search from '../components/Search';
 import Spinner from '../components/Spinner';
+import Skeleton from '../components/Skeleton';
 import MovieCard from '../components/MovieCard';
 
 import { fetchMovies, fetchTrendingMovies } from '../services/tmdb';
@@ -85,23 +86,33 @@ const HomePage = () => {
             <section className="mt-20">
                <h2>Trending This Week</h2>
 
-               <ol className="flex flex-row overflow-x-auto w-full hide-scrollbar">
-                  {trendingMovies.map((movie, index) => (
-                     <Carousel
-                        key={movie.id}
-                        trendingMovies={trendingMovies}
-                        movie={movie}
-                        index={index}
-                     />
-                  ))}
-               </ol>
+               {isLoading ? (
+                  <ol className="flex flex-row overflow-x-auto w-full hide-scrollbar">
+                     <Skeleton variant="carousel" count={5} />
+                  </ol>
+               ) : errorMessage ? (
+                  <p className="text-red-500">{errorMessage}</p>
+               ) : (
+                  <ol className="flex flex-row overflow-x-auto w-full hide-scrollbar">
+                     {trendingMovies.map((movie, index) => (
+                        <Carousel
+                           key={movie.id}
+                           trendingMovies={trendingMovies}
+                           movie={movie}
+                           index={index}
+                        />
+                     ))}
+                  </ol>
+               )}
             </section>
 
             <section className="all-movies">
                <h2 className="mt-10">All Movies</h2>
 
                {isLoading ? (
-                  <Spinner />
+                  <ul className="grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                     <Skeleton variant="card" count={8} />
+                  </ul>
                ) : errorMessage ? (
                   <p className="text-red-500">{errorMessage}</p>
                ) : (
