@@ -56,3 +56,14 @@ export async function fetchMovieCredits(id) {
 
    return response.json();
 }
+
+export async function fetchMovieVideos(id) {
+   const endpoint = `${API_URL}/movie/${id}/videos`;
+
+   const response = await fetch(endpoint, API_OPTIONS);
+   if (!response.ok) {
+      throw new Error('Failed to fetch movie videos');
+   }
+
+   return response.json();
+}

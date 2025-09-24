@@ -3,12 +3,17 @@ import { Link, useParams } from 'react-router-dom';
 
 import Spinner from '../components/Spinner';
 
-import { fetchMovieById, fetchMovieCredits } from '../services/tmdb';
+import {
+   fetchMovieById,
+   fetchMovieCredits,
+   fetchMovieVideos,
+} from '../services/tmdb';
 
 const MovieDetailPage = () => {
    const { id } = useParams();
    const [movie, setMovie] = useState(null);
    const [cast, setCast] = useState([]);
+   const [videos, setVideos] = useState([]);
    const [isLoading, setIsLoading] = useState(false);
    const [errorMessage, setErrorMessage] = useState('');
 
@@ -17,13 +22,15 @@ const MovieDetailPage = () => {
       setErrorMessage('');
 
       try {
-         const [movieData, creditsData] = await Promise.all([
+         const [movieData, creditsData, videosData] = await Promise.all([
             fetchMovieById(id),
             fetchMovieCredits(id),
+            fetchMovieVideos(id),
          ]);
 
          setMovie(movieData);
          setCast(creditsData.cast);
+         setVideos(videosData.results);
       } catch (error) {
          console.error('Error fetching movie:', error);
          setErrorMessage('Failed to fetch movie. Please try again later.');
@@ -31,6 +38,10 @@ const MovieDetailPage = () => {
          setIsLoading(false);
       }
    };
+
+   const trailer = videos.find(
+      (video) => video.type === 'Trailer' && video.site === 'YouTube'
+   );
 
    useEffect(() => {
       loadMovieById(id);
@@ -44,7 +55,7 @@ const MovieDetailPage = () => {
             <p className="text-red-500">{errorMessage}</p>
          ) : (
             movie && (
-               <>
+               <div className="flex flex-col max-w-4xl mx-auto">
                   <div className="max-w-4xl mx-auto bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
                      {/* Header */}
                      <div className="flex justify-between items-center p-4 border-b border-gray-800">
@@ -156,7 +167,24 @@ const MovieDetailPage = () => {
                         </div>
                      )}
                   </section>
-               </>
+
+                  {trailer && (
+                     <section className="my-8">
+                        <h2 className="font-semibold text-gray-200 mb-5">
+                           Trailer
+                        </h2>
+                        <div>
+                           <iframe
+                              src={`https://www.youtube.com/embed/${trailer.key}`}
+                              title={trailer.name}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              className="w-full h-96 rounded-xl shadow-md"
+                           ></iframe>
+                        </div>
+                     </section>
+                  )}
+               </div>
             )
          )}
       </>
