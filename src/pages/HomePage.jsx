@@ -3,7 +3,6 @@ import { useDebounce } from 'react-use';
 
 import Carousel from '../components/Carousel';
 import Search from '../components/Search';
-import Spinner from '../components/Spinner';
 import Skeleton from '../components/Skeleton';
 import MovieCard from '../components/MovieCard';
 
@@ -70,7 +69,7 @@ const HomePage = () => {
 
    return (
       <>
-         <div className="bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0" />
+         <div className="pattern" />
 
          <div className="wrapper">
             <header>
@@ -84,7 +83,7 @@ const HomePage = () => {
             </header>
 
             <section className="mt-20">
-               <h2>Trending This Week</h2>
+               <h2 className="mb-5">Trending This Week</h2>
 
                {isLoading ? (
                   <ol className="flex flex-row overflow-x-auto w-full hide-scrollbar">
@@ -110,7 +109,7 @@ const HomePage = () => {
                <h2 className="mt-10">All Movies</h2>
 
                {isLoading ? (
-                  <ul className="grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  <ul>
                      <Skeleton variant="card" count={8} />
                   </ul>
                ) : errorMessage ? (

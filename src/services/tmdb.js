@@ -45,3 +45,14 @@ export async function fetchMovieById(id) {
 
    return response.json();
 }
+
+export async function fetchMovieCredits(id) {
+   const endpoint = `${API_URL}/movie/${id}/credits`;
+
+   const response = await fetch(endpoint, API_OPTIONS);
+   if (!response.ok) {
+      throw new Error('Failed to fetch movie credits');
+   }
+
+   return response.json();
+}

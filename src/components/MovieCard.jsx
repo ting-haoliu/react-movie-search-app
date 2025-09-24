@@ -20,6 +20,7 @@ const MovieCard = ({
                      : '/No-Poster.png'
                }
                alt={title}
+               loading="lazy"
             />
 
             <div className="mt-4">
