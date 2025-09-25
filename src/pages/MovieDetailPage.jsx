@@ -55,11 +55,11 @@ const MovieDetailPage = () => {
             <p className="text-red-500">{errorMessage}</p>
          ) : (
             movie && (
-               <div className="flex flex-col max-w-4xl mx-auto">
-                  <div className="max-w-4xl mx-auto bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
+               <div className="flex flex-col gap-12 max-w-4xl mx-auto">
+                  <section className="bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
                      {/* Header */}
                      <div className="flex justify-between items-center p-4 border-b border-gray-800">
-                        <h2>{movie.title}</h2>
+                        <h1 className="text-2xl m-0">{movie.title}</h1>
                         <Link
                            to="/"
                            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition"
@@ -69,7 +69,7 @@ const MovieDetailPage = () => {
                      </div>
 
                      {/* Content */}
-                     <section className="flex flex-col md:flex-row">
+                     <div className="flex flex-col md:flex-row">
                         {/* Poster */}
                         <div className="md:w-1/3">
                            <img
@@ -84,57 +84,55 @@ const MovieDetailPage = () => {
                         </div>
 
                         {/* Details */}
-                        <div className="text-left p-6 space-y-6 md:w-2/3">
-                           <div className="space-y-6 text-sm text-gray-400">
-                              <div>
-                                 <h3 className="font-medium text-gray-200">
-                                    Runtime
-                                 </h3>
-                                 <p className="mt-1">
-                                    {Math.floor(movie.runtime / 60)}h{' '}
-                                    {movie.runtime % 60}
-                                    min
-                                 </p>
-                              </div>
-                              <div>
-                                 <h3 className="font-medium text-gray-200">
-                                    Release Date
-                                 </h3>
-                                 <p className="mt-1">{movie.release_date}</p>
-                              </div>
-                              <div>
-                                 <h3 className="font-medium text-gray-200">
-                                    Rating
-                                 </h3>
-                                 <p className="mt-1">
-                                    {movie.vote_average.toFixed(1)} / 10 (
-                                    {movie.vote_count} votes)
-                                 </p>
-                              </div>
-                              <div>
-                                 <p className="text-gray-300 text-lg leading-relaxed">
-                                    {movie.overview}
-                                 </p>
-                              </div>
-
-                              {movie.genres && (
-                                 <div className="flex flex-wrap gap-2">
-                                    {movie.genres.map((genre) => (
-                                       <span
-                                          key={genre.id}
-                                          className="px-3 py-1 bg-gray-800 rounded-full text-sm text-gray-200"
-                                       >
-                                          {genre.name}
-                                       </span>
-                                    ))}
-                                 </div>
-                              )}
+                        <div className="p-6 space-y-6 text-sm text-left text-gray-400 md:w-2/3">
+                           <div>
+                              <h3 className="font-medium text-gray-200">
+                                 Runtime
+                              </h3>
+                              <p className="mt-1">
+                                 {Math.floor(movie.runtime / 60)}h{' '}
+                                 {movie.runtime % 60}
+                                 min
+                              </p>
                            </div>
-                        </div>
-                     </section>
-                  </div>
+                           <div>
+                              <h3 className="font-medium text-gray-200">
+                                 Release Date
+                              </h3>
+                              <p className="mt-1">{movie.release_date}</p>
+                           </div>
+                           <div>
+                              <h3 className="font-medium text-gray-200">
+                                 Rating
+                              </h3>
+                              <p className="mt-1">
+                                 {movie.vote_average.toFixed(1)} / 10 (
+                                 {movie.vote_count} votes)
+                              </p>
+                           </div>
+                           <div>
+                              <p className="text-gray-300 text-lg leading-relaxed">
+                                 {movie.overview}
+                              </p>
+                           </div>
 
-                  <section className="my-8">
+                           {movie.genres && (
+                              <div className="flex flex-wrap gap-2">
+                                 {movie.genres.map((genre) => (
+                                    <span
+                                       key={genre.id}
+                                       className="px-3 py-1 bg-gray-800 rounded-full text-sm text-gray-200"
+                                    >
+                                       {genre.name}
+                                    </span>
+                                 ))}
+                              </div>
+                           )}
+                        </div>
+                     </div>
+                  </section>
+
+                  <section>
                      {cast.length > 0 && (
                         <div>
                            <h2 className="font-semibold text-gray-200 mb-5">
@@ -169,7 +167,7 @@ const MovieDetailPage = () => {
                   </section>
 
                   {trailer && (
-                     <section className="my-8">
+                     <section className="mb-8">
                         <h2 className="font-semibold text-gray-200 mb-5">
                            Trailer
                         </h2>
