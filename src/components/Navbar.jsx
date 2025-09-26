@@ -23,11 +23,6 @@ const Navbar = () => {
                   Favorites
                </Link>
             </li>
-            <li>
-               <Link to="/signin" className="hover:text-red-400">
-                  Sign In
-               </Link>
-            </li>
          </ul>
 
          <button
@@ -89,13 +84,6 @@ const Navbar = () => {
                   className="hover:text-red-400"
                >
                   Favorites
-               </Link>
-               <Link
-                  to="/signin"
-                  onClick={() => setIsOpen(false)}
-                  className="hover:text-red-400"
-               >
-                  Sign In
                </Link>
             </div>
          )}
