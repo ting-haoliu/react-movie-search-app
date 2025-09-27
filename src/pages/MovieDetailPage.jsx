@@ -58,7 +58,7 @@ const MovieDetailPage = () => {
                <div className="flex flex-col gap-12 max-w-4xl mx-auto">
                   <section className="bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
                      {/* Header */}
-                     <div className="flex justify-between items-center p-4 border-b border-gray-800">
+                     <div className="flex justify-between items-center p-6 border-b border-gray-800 md:py-4 lg:py-2">
                         <h1 className="text-2xl m-0">{movie.title}</h1>
                         <Link
                            to="/"
@@ -171,13 +171,13 @@ const MovieDetailPage = () => {
                         <h2 className="font-semibold text-gray-200 mb-5">
                            Trailer
                         </h2>
-                        <div>
+                        <div className="aspect-video">
                            <iframe
                               src={`https://www.youtube.com/embed/${trailer.key}`}
                               title={trailer.name}
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                               allowFullScreen
-                              className="w-full h-96 rounded-xl shadow-md"
+                              className="w-full h-full rounded-xl shadow-md"
                            ></iframe>
                         </div>
                      </section>
