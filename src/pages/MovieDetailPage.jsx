@@ -16,6 +16,24 @@ const MovieDetailPage = () => {
    const [videos, setVideos] = useState([]);
    const [isLoading, setIsLoading] = useState(false);
    const [errorMessage, setErrorMessage] = useState('');
+   const [isFavorite, setIsFavorite] = useState(false);
+
+   // check the movie is in favorites
+   useEffect(() => {
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      setIsFavorite(favorites.includes(id));
+   }, [id]);
+
+   const toggleFavorite = () => {
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      if (isFavorite) {
+         favorites = favorites.filter((favId) => favId !== id);
+      } else {
+         favorites.push(id);
+      }
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      setIsFavorite(!isFavorite);
+   };
 
    const loadMovieById = async (id) => {
       setIsLoading(true);
@@ -60,12 +78,24 @@ const MovieDetailPage = () => {
                      {/* Header */}
                      <div className="flex justify-between items-center p-6 border-b border-gray-800 md:py-4 lg:py-2">
                         <h1 className="text-2xl m-0">{movie.title}</h1>
-                        <Link
-                           to="/"
-                           className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition"
-                        >
-                           Go Back
-                        </Link>
+                        <div className="flex gap-2">
+                           <button
+                              className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
+                                 isFavorite
+                                    ? 'bg-red-600 hover:bg-red-500'
+                                    : 'bg-gray-700 hover:bg-gray-600'
+                              }`}
+                              onClick={toggleFavorite}
+                           >
+                              {isFavorite ? 'Liked' : 'Like'}
+                           </button>
+                           <Link
+                              to="/"
+                              className="px-4 py-2 rounded-lg text-sm font-medium transition bg-indigo-600 hover:bg-indigo-500"
+                           >
+                              Go Back
+                           </Link>
+                        </div>
                      </div>
 
                      {/* Content */}
