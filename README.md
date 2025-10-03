@@ -1,15 +1,17 @@
-# 🎬 React Movie Searching Website
+# 🎬 React Movie Search App
 
-A movie searching website built with **React** and **TMDB API**, featuring search, popular movies, trending movies, and detailed movie information.  
-Deployed on **Vercel**:  
-👉 [Live Demo](https://react-movie-searching.vercel.app/)
+Built with **React**, **TMDB API**, **Tailwind CSS**, and deployed on **Vercel**.   
+
+🚀 **Live Demo**: [react-movie-searching.vercel.app](https://react-movie-searching.vercel.app/)  
+📂 **Source Code**: [GitHub Repository](https://github.com/ting-haoliu/react-movie_searching)
+
 
 ---
 
 ## Features
 
 - **Movie Search**: Search for movies from the TMDB database by keyword.
-    - Optimized with **debounce** to reduce unnecessary API requests and improve performance.
+    - Includes **debounce optimization** to reduce API calls.
 - **Popular Movies**: Homepage displays the top 20 most popular movies.  
 - **Trending Movies**: Shows this week's trending movies.  
 - **Movie Detail Page**: Click on any movie card to view detailed information, including:
@@ -19,6 +21,12 @@ Deployed on **Vercel**:
   - Rating  
   - Overview  
   - Genres
+  - Cast
+  - Trailer
+- **Favorite Movies**:  
+  - Users can mark/unmark movies as favorite.  
+  - Favorites are **persisted in localStorage** so they remain after refresh.  
+  - A dedicated **Favorites Page** lists all saved movies.  
 - **Responsive Web Design (RWD)**: Fully responsive layout that works seamlessly on desktops, tablets, and mobile devices.
 
 ---
@@ -52,13 +60,17 @@ Deployed on **Vercel**:
 ## Screenshots
 
 ### Homepage
-![Homepage Screenshot](screenshots/Homepage.png)
+![React Movie Search App Homepage Screenshot](screenshots/Homepage.png)
 
 ### Trending
-![Trending Screenshot](screenshots/Trending.png)
+![React Movie Search App Trending Movies Screenshot](screenshots/Trending.png)
 
 ### Movie Details
-![Movie Detail Screenshot](screenshots/Detail.png)
+![React Movie Search App Movie Detail Page Screenshot](screenshots/Detail1.png)
+![React Movie Search App Movie Detail Page Additional Screenshot](screenshots/Detail2.png)
+
+### Favorite
+![React Movie Search App Favorites Page Screenshot](screenshots/Favorite.png)
 
 ## License
 MIT License
