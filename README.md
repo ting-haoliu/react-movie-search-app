@@ -2,8 +2,8 @@
 
 Built with **React**, **TMDB API**, **Tailwind CSS**, and deployed on **Vercel**.   
 
-🚀 **Live Demo**: [react-movie-searching.vercel.app](https://react-movie-searching.vercel.app/)  
-📂 **Source Code**: [GitHub Repository](https://github.com/ting-haoliu/react-movie_searching)
+🚀 **Live Demo**: [react-tmdb-movie-search.vercel.app](https://react-tmdb-movie-search.vercel.app/)  
+📂 **Source Code**: [GitHub Repository](https://github.com/ting-haoliu/react-movie-search-app.git)
 
 
 ---
@@ -15,18 +15,18 @@ Built with **React**, **TMDB API**, **Tailwind CSS**, and deployed on **Vercel**
 - **Popular Movies**: Homepage displays the top 20 most popular movies.  
 - **Trending Movies**: Shows this week's trending movies.  
 - **Movie Detail Page**: Click on any movie card to view detailed information, including:
-  - Title  
-  - Runtime  
-  - Release Date  
-  - Rating  
-  - Overview  
-  - Genres
-  - Cast
-  - Trailer
+    - Title  
+    - Runtime  
+    - Release Date  
+    - Rating  
+    - Overview  
+    - Genres
+    - Cast
+    - Trailer
 - **Favorite Movies**:  
-  - Users can mark/unmark movies as favorite.  
-  - Favorites are **persisted in localStorage** so they remain after refresh.  
-  - A dedicated **Favorites Page** lists all saved movies.  
+    - Users can mark/unmark movies as favorite.  
+    - Favorites are **persisted in localStorage** so they remain after refresh.  
+    - A dedicated **Favorites Page** lists all saved movies.  
 - **Responsive Web Design (RWD)**: Fully responsive layout that works seamlessly on desktops, tablets, and mobile devices.
 
 ---
@@ -45,8 +45,8 @@ Built with **React**, **TMDB API**, **Tailwind CSS**, and deployed on **Vercel**
 
 1. **Clone the repo**
     ```bash
-    git clone git@github.com:ting-haoliu/react-movie_searching.git
-    cd react-movie_searching
+    git clone git@github.com:ting-haoliu/react-movie-search-app.git
+    cd react-movie-search-app
 2. **Install dependencies**
     ```bash
     npm install
@@ -57,6 +57,7 @@ Built with **React**, **TMDB API**, **Tailwind CSS**, and deployed on **Vercel**
 4. **Run the development server**
     ```bash
     npm run dev
+
 ## Screenshots
 
 ### Homepage
