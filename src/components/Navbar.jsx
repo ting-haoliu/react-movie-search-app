@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
+import { LoginModal } from './LoginModal';
+
 const Navbar = () => {
-   const [isOpen, setIsOpen] = useState(false);
+   const [isMenuOpen, setIsMenuOpen] = useState(false);
+   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
    return (
       <nav className="w-full h-16 bg-black/80 text-white px-6 py-4 flex items-center justify-between fixed top-0 left-0 z-50">
@@ -23,14 +26,22 @@ const Navbar = () => {
                   Favorites
                </Link>
             </li>
+            <li>
+               <button
+                  className="hover:text-red-400"
+                  onClick={() => setIsLoginModalOpen(true)}
+               >
+                  Login
+               </button>
+            </li>
          </ul>
 
          <button
             className="sm:hidden"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle Menu"
          >
-            {isOpen ? (
+            {isMenuOpen ? (
                <svg
                   className="w-6 h-6 text-gray-800 dark:text-white"
                   aria-hidden="true"
@@ -69,24 +80,38 @@ const Navbar = () => {
          </button>
 
          {/* Mobile Menu Icon */}
-         {isOpen && (
+         {isMenuOpen && (
             <div className="absolute top-16 left-0 w-full bg-black/90 text-white flex flex-col items-center gap-6 py-6 md:hidden">
                <Link
                   to="/"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsMenuOpen(false)}
                   className="hover:text-red-400"
                >
                   Home
                </Link>
                <Link
                   to="/favorites"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsMenuOpen(false)}
                   className="hover:text-red-400"
                >
                   Favorites
                </Link>
+               <button
+                  onClick={() => {
+                     setIsMenuOpen(false);
+                     setIsLoginModalOpen(true);
+                  }}
+                  className="hover:text-red-400"
+               >
+                  Login
+               </button>
             </div>
          )}
+
+         <LoginModal
+            isOpen={isLoginModalOpen}
+            onClose={() => setIsLoginModalOpen(false)}
+         />
       </nav>
    );
 };
