@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-import { LoginModal } from './LoginModal';
+import LoginModal from './LoginModal';
 
 const Navbar = () => {
    const [isMenuOpen, setIsMenuOpen] = useState(false);
