@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 import LoginModal from './LoginModal';
+import SignUpModal from './SignUpModal';
 
 const Navbar = () => {
    const [isMenuOpen, setIsMenuOpen] = useState(false);
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
 
    return (
       <nav className="w-full h-16 bg-black/80 text-white px-6 py-4 flex items-center justify-between fixed top-0 left-0 z-50">
@@ -31,7 +33,7 @@ const Navbar = () => {
                   className="hover:text-red-400"
                   onClick={() => setIsLoginModalOpen(true)}
                >
-                  Login
+                  Sign In
                </button>
             </li>
          </ul>
@@ -111,6 +113,15 @@ const Navbar = () => {
          <LoginModal
             isOpen={isLoginModalOpen}
             onClose={() => setIsLoginModalOpen(false)}
+            onSwitchToSignup={() => {
+               setIsLoginModalOpen(false);
+               setIsSignupModalOpen(true);
+            }}
+         />
+
+         <SignUpModal
+            isOpen={isSignupModalOpen}
+            onClose={() => setIsSignupModalOpen(false)}
          />
       </nav>
    );

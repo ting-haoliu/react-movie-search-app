@@ -1,4 +1,4 @@
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
    if (!isOpen) return null;
 
    const handleSubmit = (e) => {
@@ -61,6 +61,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                </span>
                <button
                   type="button"
+                  onClick={onSwitchToSignup}
                   className="text-blue-500 text-sm hover:text-blue-400 transition-colors underline"
                >
                   Sign Up
