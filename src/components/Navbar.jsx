@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabaseClient';
 
 import LoginModal from './LoginModal';
 import SignUpModal from './SignUpModal';
@@ -8,6 +9,32 @@ const Navbar = () => {
    const [isMenuOpen, setIsMenuOpen] = useState(false);
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
    const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+   const [user, setUser] = useState(null); // Placeholder for user state
+
+   useEffect(() => {
+      supabase.auth.getUser().then(({ data }) => {
+         setUser(data.user);
+      });
+
+      const { data: authListener } = supabase.auth.onAuthStateChange(
+         (event, session) => {
+            if (event === 'SIGNED_IN') {
+               setUser(session.user);
+            } else if (event === 'SIGNED_OUT') {
+               setUser(null);
+            }
+         }
+      );
+
+      return () => {
+         authListener.subscription.unsubscribe();
+      };
+   }, []);
+
+   const handleSignOut = async () => {
+      await supabase.auth.signOut();
+      setUser(null);
+   };
 
    return (
       <nav className="w-full h-16 bg-black/80 text-white px-6 py-4 flex items-center justify-between fixed top-0 left-0 z-50">
@@ -17,7 +44,7 @@ const Navbar = () => {
          </Link>
 
          {/* Desktop Links */}
-         <ul className="hidden sm:flex gap-6">
+         <ul className="hidden sm:flex items-center gap-6">
             <li>
                <Link to="/" className="hover:text-red-400">
                   Home
@@ -29,12 +56,26 @@ const Navbar = () => {
                </Link>
             </li>
             <li>
-               <button
-                  className="hover:text-red-400"
-                  onClick={() => setIsLoginModalOpen(true)}
-               >
-                  Sign In
-               </button>
+               {!user ? (
+                  <button
+                     className="hover:text-red-400"
+                     onClick={() => setIsLoginModalOpen(true)}
+                  >
+                     Sign In
+                  </button>
+               ) : (
+                  <div className="flex items-center gap-2">
+                     <span className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-white font-semibold">
+                        {user.email?.charAt(0).toUpperCase()}
+                     </span>
+                     <button
+                        className="hover:text-red-400"
+                        onClick={handleSignOut}
+                     >
+                        Sign Out
+                     </button>
+                  </div>
+               )}
             </li>
          </ul>
 
@@ -83,7 +124,7 @@ const Navbar = () => {
 
          {/* Mobile Menu Icon */}
          {isMenuOpen && (
-            <div className="absolute top-16 left-0 w-full bg-black/90 text-white flex flex-col items-center gap-6 py-6 md:hidden">
+            <div className="absolute top-16 left-0 w-full bg-black/90 text-white flex flex-col items-center gap-6 py-6 sm:hidden">
                <Link
                   to="/"
                   onClick={() => setIsMenuOpen(false)}
@@ -91,6 +132,7 @@ const Navbar = () => {
                >
                   Home
                </Link>
+
                <Link
                   to="/favorites"
                   onClick={() => setIsMenuOpen(false)}
@@ -98,15 +140,38 @@ const Navbar = () => {
                >
                   Favorites
                </Link>
-               <button
-                  onClick={() => {
-                     setIsMenuOpen(false);
-                     setIsLoginModalOpen(true);
-                  }}
-                  className="hover:text-red-400"
-               >
-                  Login
-               </button>
+
+               {!user ? (
+                  <button
+                     onClick={() => {
+                        setIsMenuOpen(false);
+                        setIsLoginModalOpen(true);
+                     }}
+                     className="hover:text-red-400"
+                  >
+                     Sign In
+                  </button>
+               ) : (
+                  <button
+                     onClick={() => {
+                        setIsMenuOpen(false);
+                        handleSignOut();
+                     }}
+                     className="hover:text-red-400"
+                  >
+                     Sign Out
+                  </button>
+               )}
+
+               {user && (
+                  <>
+                     <div className="border-t border-gray-700 w-full" />
+
+                     <span className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-white font-semibold">
+                        {user.email?.charAt(0).toUpperCase()}
+                     </span>
+                  </>
+               )}
             </div>
          )}
 

@@ -1,10 +1,28 @@
+import { useState } from 'react';
+
+import { signIn } from '../services/auth';
+
 const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
+   const [email, setEmail] = useState('');
+   const [password, setPassword] = useState('');
+   const [error, setError] = useState(null);
+
    if (!isOpen) return null;
 
-   const handleSubmit = (e) => {
+   const handleSignIn = async (e) => {
       e.preventDefault();
-      // TODO: Handle form submission
-      console.log('Form submitted');
+
+      try {
+         const { user, session } = await signIn(email, password);
+         console.log('Sign In successful:', user, session);
+         onClose();
+      } catch (err) {
+         setError(err.message);
+      }
+   };
+
+   const handleGoogleSignIn = () => {
+      console.log('Google Sign-In clicked');
    };
 
    return (
@@ -19,7 +37,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
             <h2 className="text-2xl font-bold text-white mb-6">Sign In</h2>
 
             {/* Email/Password Form */}
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 mb-4">
+            <form onSubmit={handleSignIn} className="flex flex-col gap-4 mb-4">
                <div className="flex flex-col gap-2">
                   <label htmlFor="email" className="text-white text-sm">
                      Email
@@ -28,6 +46,8 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
                      type="email"
                      id="email"
                      placeholder="Enter your email"
+                     value={email}
+                     onChange={(e) => setEmail(e.target.value)}
                      className="px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
                      required
                   />
@@ -41,10 +61,14 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
                      type="password"
                      id="password"
                      placeholder="Enter your password"
+                     value={password}
+                     onChange={(e) => setPassword(e.target.value)}
                      className="px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
                      required
                   />
                </div>
+
+               {error && <p className="text-red-500 text-sm">{error}</p>}
 
                <button
                   type="submit"
@@ -76,7 +100,10 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
             </div>
 
             {/* Google Sign In */}
-            <button className="w-full px-4 py-2 bg-white text-black rounded flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors mb-4">
+            <button
+               className="w-full px-4 py-2 bg-white text-black rounded flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors mb-4"
+               onClick={handleGoogleSignIn}
+            >
                <img src="./Google.svg" alt="Google logo" className="w-5 h-5" />
                Sign in with Google
             </button>
