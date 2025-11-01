@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { supabase } from '../lib/supabaseClient';
+import { useAuth } from '../context/useAuth';
 
 import Spinner from '../components/Spinner';
 
@@ -17,22 +19,57 @@ const MovieDetailPage = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [errorMessage, setErrorMessage] = useState('');
    const [isFavorite, setIsFavorite] = useState(false);
+   const { user } = useAuth();
+
+   // Page will scroll to top on load
+   useEffect(() => {
+      window.scrollTo(0, 0);
+   }, []);
 
    // check the movie is in favorites
    useEffect(() => {
-      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-      setIsFavorite(favorites.includes(id));
-   }, [id]);
+      const checkFavorite = async () => {
+         if (!user) return;
 
-   const toggleFavorite = () => {
-      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-      if (isFavorite) {
-         favorites = favorites.filter((favId) => favId !== id);
-      } else {
-         favorites.push(id);
+         const { data } = await supabase
+            .from('favorites')
+            .select('movie_id')
+            .eq('user_id', user.id)
+            .eq('movie_id', id)
+            .maybeSingle();
+
+         setIsFavorite(!!data);
+      };
+
+      checkFavorite();
+   }, [user, id]);
+
+   const toggleFavorite = async () => {
+      if (!user) {
+         alert('Please log in to manage favorites.');
+         return;
       }
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-      setIsFavorite(!isFavorite);
+
+      if (isFavorite) {
+         // Remove from favorites
+         const { error } = await supabase
+            .from('favorites')
+            .delete()
+            .eq('user_id', user.id)
+            .eq('movie_id', id);
+
+         if (!error) setIsFavorite(false);
+      } else {
+         // Add to favorites
+         const { error } = await supabase.from('favorites').insert([
+            {
+               user_id: user.id,
+               movie_id: id,
+            },
+         ]);
+
+         if (!error) setIsFavorite(true);
+      }
    };
 
    const loadMovieById = async (id) => {

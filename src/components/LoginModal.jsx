@@ -13,8 +13,9 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
       e.preventDefault();
 
       try {
-         const { user, session } = await signIn(email, password);
-         console.log('Sign In successful:', user, session);
+         const data = await signIn(email, password);
+         console.log('Sign In successful:', data);
+
          onClose();
       } catch (err) {
          setError(err.message);
@@ -49,7 +50,6 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
                      value={email}
                      onChange={(e) => setEmail(e.target.value)}
                      className="px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
-                     required
                   />
                </div>
 
@@ -64,7 +64,6 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
                      value={password}
                      onChange={(e) => setPassword(e.target.value)}
                      className="px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
-                     required
                   />
                </div>
 
@@ -104,7 +103,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
                className="w-full px-4 py-2 bg-white text-black rounded flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors mb-4"
                onClick={handleGoogleSignIn}
             >
-               <img src="./Google.svg" alt="Google logo" className="w-5 h-5" />
+               <img src="./Google.svg" alt="Google Logo" className="w-5 h-5" />
                Sign in with Google
             </button>
 

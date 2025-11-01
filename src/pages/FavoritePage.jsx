@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabaseClient';
+import { useAuth } from '../context/useAuth';
 
 import Spinner from '../components/Spinner';
 import MovieCard from '../components/MovieCard';
@@ -9,15 +11,41 @@ const FavoritePage = () => {
    const [favorite, setFavorite] = useState([]);
    const [movies, setMovies] = useState([]);
    const [isLoading, setIsLoading] = useState(false);
+   const { user } = useAuth();
 
-   // Load favorite movie IDs from localStorage in first render
+   // Page will scroll to top on load
    useEffect(() => {
-      const favIds = JSON.parse(localStorage.getItem('favorites')) || [];
-      setFavorite(favIds);
+      window.scrollTo(0, 0);
    }, []);
+
+   // Load favorite movie IDs from database in first render
+   useEffect(() => {
+      const loadFavorites = async () => {
+         if (!user) {
+            setFavorite([]);
+            return;
+         }
+
+         const { data } = await supabase
+            .from('favorites')
+            .select('movie_id')
+            .eq('user_id', user.id);
+
+         const movieIds = data ? data.map((item) => item.movie_id) : [];
+         setFavorite(movieIds);
+         console.log('Favorite movie IDs:', movieIds);
+      };
+
+      loadFavorites();
+   }, [user]);
 
    // Fetch movie details for favorite movies
    useEffect(() => {
+      if (favorite.length === 0) {
+         setMovies([]);
+         return;
+      }
+
       const fetchMovies = async () => {
          setIsLoading(true);
 

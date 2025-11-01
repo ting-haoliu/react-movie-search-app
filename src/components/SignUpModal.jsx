@@ -15,6 +15,7 @@ const SignUpModal = ({ isOpen, onClose }) => {
       try {
          const data = await signUp(email, password);
          console.log('Sign Up successful:', data);
+
          onClose();
       } catch (err) {
          setError(err.message);
@@ -41,7 +42,6 @@ const SignUpModal = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
-                  required
                />
                <input
                   type="password"
@@ -49,7 +49,6 @@ const SignUpModal = ({ isOpen, onClose }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-blue-500"
-                  required
                />
 
                {error && <p className="text-red-500 text-sm">{error}</p>}

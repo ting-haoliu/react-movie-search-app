@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import { useAuth } from '../context/useAuth';
 
 import LoginModal from './LoginModal';
 import SignUpModal from './SignUpModal';
@@ -9,35 +10,18 @@ const Navbar = () => {
    const [isMenuOpen, setIsMenuOpen] = useState(false);
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
    const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-   const [user, setUser] = useState(null); // Placeholder for user state
-
-   useEffect(() => {
-      supabase.auth.getUser().then(({ data }) => {
-         setUser(data.user);
-      });
-
-      const { data: authListener } = supabase.auth.onAuthStateChange(
-         (event, session) => {
-            if (event === 'SIGNED_IN') {
-               setUser(session.user);
-            } else if (event === 'SIGNED_OUT') {
-               setUser(null);
-            }
-         }
-      );
-
-      return () => {
-         authListener.subscription.unsubscribe();
-      };
-   }, []);
+   const { user } = useAuth();
+   const navigate = useNavigate();
 
    const handleSignOut = async () => {
       await supabase.auth.signOut();
-      setUser(null);
+
+      // redirect to home page after sign out
+      navigate('/');
    };
 
    return (
-      <nav className="w-full h-16 bg-black/80 text-white px-6 py-4 flex items-center justify-between fixed top-0 left-0 z-50">
+      <nav className="w-full h-20 bg-black/80 text-white px-6 py-4 flex items-center justify-between fixed top-0 left-0 z-50">
          {/* Logo */}
          <Link to="/" className="text-2xl font-bold text-gradient">
             MovieApp
@@ -50,11 +34,15 @@ const Navbar = () => {
                   Home
                </Link>
             </li>
-            <li>
-               <Link to="/favorites" className="hover:text-red-400">
-                  Favorites
-               </Link>
-            </li>
+
+            {user && (
+               <li>
+                  <Link to="/favorites" className="hover:text-red-400">
+                     Favorites
+                  </Link>
+               </li>
+            )}
+
             <li>
                {!user ? (
                   <button
@@ -133,13 +121,15 @@ const Navbar = () => {
                   Home
                </Link>
 
-               <Link
-                  to="/favorites"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="hover:text-red-400"
-               >
-                  Favorites
-               </Link>
+               {user && (
+                  <Link
+                     to="/favorites"
+                     onClick={() => setIsMenuOpen(false)}
+                     className="hover:text-red-400"
+                  >
+                     Favorites
+                  </Link>
+               )}
 
                {!user ? (
                   <button
