@@ -13,8 +13,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
       e.preventDefault();
 
       try {
-         const data = await signIn(email, password);
-         console.log('Sign In successful:', data);
+         await signIn(email, password);
 
          onClose();
       } catch (err) {

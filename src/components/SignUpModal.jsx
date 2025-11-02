@@ -13,8 +13,7 @@ const SignUpModal = ({ isOpen, onClose }) => {
       e.preventDefault();
 
       try {
-         const data = await signUp(email, password);
-         console.log('Sign Up successful:', data);
+         await signUp(email, password);
 
          onClose();
       } catch (err) {

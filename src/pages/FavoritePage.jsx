@@ -33,7 +33,6 @@ const FavoritePage = () => {
 
          const movieIds = data ? data.map((item) => item.movie_id) : [];
          setFavorite(movieIds);
-         console.log('Favorite movie IDs:', movieIds);
       };
 
       loadFavorites();

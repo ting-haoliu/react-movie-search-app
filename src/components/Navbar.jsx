@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { signOut } from '../services/auth';
 import { useAuth } from '../context/useAuth';
 
 import LoginModal from './LoginModal';
@@ -14,7 +14,7 @@ const Navbar = () => {
    const navigate = useNavigate();
 
    const handleSignOut = async () => {
-      await supabase.auth.signOut();
+      await signOut();
 
       // redirect to home page after sign out
       navigate('/');
