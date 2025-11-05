@@ -2,11 +2,11 @@
 
 Built with **React**, **TMDB API**, **Tailwind CSS**, **Express.js**, **PostgreSQL**, **Supabase** and deployed on **Vercel**.   
 
-🚀 **Live Demo**: [react-tmdb-movie-search.vercel.app](https://react-tmdb-movie-search.vercel.app/)  
-📂 **Source Code**: [GitHub Repository](https://github.com/ting-haoliu/react-movie-search-app.git)  
+🚀 **Live Demo** [react-tmdb-movie-search.vercel.app](https://react-tmdb-movie-search.vercel.app/)  
+📂 **Source Code** [GitHub Repository](https://github.com/ting-haoliu/react-movie-search-app.git)  
 👤 **Test User**  
-Email:    test@test  
-Password: 123456
+    Email:    test@test  
+    Password: 123456
 
 ---
 
@@ -18,7 +18,7 @@ Password: 123456
 - **Trending Movies**: Shows this week's trending movies.  
 - **Movie Detail Page**: Click on any movie card to view detailed information.
 - **User Authentication (Supabase + PostgreSQL)**:
-    - Implemented sign-up, login, and logout using Supabase Auth.
+    - Implemented sign-up, login, and logout using JWT Auth.
     - User profiles and favorite data are stored in PostgreSQL through Supabase.
 - **Favorite Movies**:  
     - Logged-in users can mark or unmark movies as favorites.  
@@ -34,8 +34,9 @@ Password: 123456
 - **React Router**  
 - **Tailwind CSS**  
 - **TMDB API** ([The Movie Database](https://www.themoviedb.org/documentation/api))  
-- **PostgreSQL**
-- **Supabase**
+- **PostgreSQL**  
+- **Supabase**  
+- **JWT authentication**  
 - **Vercel** (Deployment)
 
 ---
