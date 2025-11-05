@@ -5,7 +5,7 @@ Built with **React**, **TMDB API**, **Tailwind CSS**, **Express.js**, **PostgreS
 🚀 **Live Demo**: [react-tmdb-movie-search.vercel.app](https://react-tmdb-movie-search.vercel.app/)  
 📂 **Source Code**: [GitHub Repository](https://github.com/ting-haoliu/react-movie-search-app.git)
 👤 **Test User**  
-Email:    test@test
+Email:    test@test  
 Password: 123456
 
 ---
