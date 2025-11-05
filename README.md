@@ -47,8 +47,8 @@ Built with **React**, **TMDB API**, **Tailwind CSS**, **Express.js**, **PostgreS
 2. **Install dependencies**
     ```bash
     npm install
-3. **Set up environment variables**
-    Create a .env file in the root directory and add your API keys:
+3. **Set up environment variables:**
+    Create a .env file in the root directory and add your API keys
     ```bash
     VITE_TMDB_API_KEY=your_tmdb_api_key
 
