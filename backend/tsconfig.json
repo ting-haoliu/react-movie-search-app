@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    // --- 编译布局 (必需添加) ---
+    "rootDir": "./src",
+    "outDir": "./dist",
+    
+    // --- 环境和模块 (与 package.json 保持一致) ---
+    "module": "NodeNext", // 推荐大写
+    "target": "ES2020",   // 更稳定的目标版本
+    "moduleResolution": "NodeNext", // 确保模块解析兼容 ESM
+    "lib": ["ES2020"],
+    "types": ["node"], // 必需添加 Node.js 类型
+    
+    // --- 严格类型检查 ---
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedSideEffectImports": true,
+    
+    // --- 输出和风格 ---
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "skipLibCheck": true,
+    
+    // --- 模块风格/兼容性 ---
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    
+    // --- 移除或禁用 JSX ---
+    // "jsx": "react-jsx", // 在纯后端项目中不需要
+  },
+  // 仅编译 src 目录下的文件
+  "include": ["src/**/*"] 
+}
