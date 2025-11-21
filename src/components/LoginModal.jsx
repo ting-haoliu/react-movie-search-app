@@ -25,6 +25,18 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
       console.log('Google Sign-In clicked');
    };
 
+   const handleDemoSignIn = async (e) => {
+      e.preventDefault();
+
+      try {
+         await signIn('test@test', '123456');
+
+         onClose();
+      } catch (err) {
+         setError(err.message);
+      }
+   };
+
    return (
       <div
          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -104,6 +116,14 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
             >
                <img src="./Google.svg" alt="Google Logo" className="w-5 h-5" />
                Sign in with Google
+            </button>
+
+            {/* Demo User Sign In */}
+            <button
+               className="w-full px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-colors mb-4"
+               onClick={handleDemoSignIn}
+            >
+               Sign in as Demo User
             </button>
 
             {/* Cancel Button */}
