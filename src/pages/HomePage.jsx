@@ -10,10 +10,12 @@ import { fetchMovies, fetchTrendingMovies } from '../services/tmdb';
 
 const HomePage = () => {
    const [searchTerm, setSearchTerm] = useState('');
-   const [errorMessage, setErrorMessage] = useState('');
+   const [movieError, setMovieError] = useState('');
+   const [trendingError, setTrendingError] = useState('');
    const [movieList, setMovieList] = useState([]);
    const [trendingMovies, setTrendingMovies] = useState([]);
-   const [isLoading, setIsLoading] = useState(false);
+   const [movieLoading, setMovieLoading] = useState(false);
+   const [trendingLoading, setTrendingLoading] = useState(false);
    const [debounceSearchTerm, setDebounceSearchTerm] = useState('');
 
    // Debounce the search term to prevent making too many API request
@@ -27,14 +29,14 @@ const HomePage = () => {
    );
 
    const loadMovies = async (query = '') => {
-      setIsLoading(true);
-      setErrorMessage('');
+      setMovieLoading(true);
+      setMovieError('');
 
       try {
          const data = await fetchMovies(query);
 
          if (!data.results || data.results.length === 0) {
-            setErrorMessage('No movies found');
+            setMovieError('No movies found');
             setMovieList([]);
             return;
          }
@@ -42,13 +44,16 @@ const HomePage = () => {
          setMovieList(data.results);
       } catch (error) {
          console.error('Error fetching movies:', error);
-         setErrorMessage('Failed to fetch movies, Please try again later.');
+         setMovieError('Failed to fetch movies, Please try again later.');
       } finally {
-         setIsLoading(false);
+         setMovieLoading(false);
       }
    };
 
    const loadTrendingMovies = async () => {
+      setTrendingLoading(true);
+      setTrendingError('');
+
       try {
          const data = await fetchTrendingMovies();
          const movies = data.results.slice(0, 10); // Get top 10 trending movies
@@ -56,6 +61,11 @@ const HomePage = () => {
          setTrendingMovies(movies);
       } catch (error) {
          console.error('Error fetching trending movies:', error);
+         setTrendingError(
+            'Failed to fetch trending movies, Please try again later.'
+         );
+      } finally {
+         setTrendingLoading(false);
       }
    };
 
@@ -85,12 +95,12 @@ const HomePage = () => {
             <section className="mt-20">
                <h2 className="mb-5">Trending This Week</h2>
 
-               {isLoading ? (
+               {trendingLoading ? (
                   <ol className="flex flex-row overflow-x-auto w-full hide-scrollbar">
                      <Skeleton variant="carousel" count={5} />
                   </ol>
-               ) : errorMessage ? (
-                  <p className="text-red-500">{errorMessage}</p>
+               ) : trendingError ? (
+                  <p className="text-red-500">{trendingError}</p>
                ) : (
                   <ol className="flex flex-row overflow-x-auto w-full hide-scrollbar">
                      {trendingMovies.map((movie, index) => (
@@ -108,12 +118,12 @@ const HomePage = () => {
             <section className="all-movies">
                <h2 className="mt-10">Latest Movies</h2>
 
-               {isLoading ? (
+               {movieLoading ? (
                   <ul>
                      <Skeleton variant="card" count={8} />
                   </ul>
-               ) : errorMessage ? (
-                  <p className="text-red-500">{errorMessage}</p>
+               ) : movieError ? (
+                  <p className="text-red-500">{movieError}</p>
                ) : (
                   <ul>
                      {movieList.map((movie) => (
