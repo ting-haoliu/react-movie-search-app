@@ -10,7 +10,10 @@ const Carousel = ({
    }
 
    return (
-      <li key={id} className="min-w-[230px] flex flex-row items-center">
+      <li
+         key={id}
+         className="min-w-[230px] flex flex-row flex-shrink-0 items-center"
+      >
          <p className="fancy-text mt-[22px] text-nowrap">{index + 1}</p>
          <Link to={`/movie/${id}`}>
             <img
