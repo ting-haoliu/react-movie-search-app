@@ -13,11 +13,13 @@ const Navbar = () => {
    const [isMenuOpen, setIsMenuOpen] = useState(false);
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
    const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
    const { user } = useAuth();
    const navigate = useNavigate();
 
    const handleSignOut = async () => {
       await signOut();
+      setIsDropdownOpen(false);
 
       // redirect to home page after sign out
       navigate('/');
@@ -55,16 +57,27 @@ const Navbar = () => {
                      Sign In
                   </button>
                ) : (
-                  <div className="flex items-center gap-2">
-                     <span className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-white font-semibold">
-                        {user.email?.charAt(0).toUpperCase()}
-                     </span>
-                     <button
-                        className="hover:text-red-400"
-                        onClick={handleSignOut}
-                     >
-                        Sign Out
+                  <div className="relative">
+                     <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                        <span className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-white font-semibold">
+                           {user.email?.charAt(0).toUpperCase()}
+                        </span>
                      </button>
+
+                     {isDropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-40 bg-gray-800 rounded-md shadow-lg py-1 border border-gray-700">
+                           <div className="px-4 py-2 text-sm text-gray-400 border-b border-gray-700">
+                              {user.email}
+                           </div>
+
+                           <button
+                              onClick={handleSignOut}
+                              className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-700 hover:text-red-400 transition-colors"
+                           >
+                              Sign Out
+                           </button>
+                        </div>
+                     )}
                   </div>
                )}
             </li>

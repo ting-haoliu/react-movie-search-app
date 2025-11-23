@@ -8,16 +8,17 @@ const API_OPTIONS = {
    },
 };
 
-export async function fetchMovies(query = '') {
+export async function fetchMovies(query = '', page = 1) {
    const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
    const endpoint = query
-      ? `${API_URL}/search/movie?query=${encodeURIComponent(query)}`
+      ? `${API_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}`
       : `${API_URL}/discover/movie?` +
         `primary_release_date.lte=${today}` +
         `&sort_by=primary_release_date.desc` +
         `&vote_count.gte=50` +
-        `&popularity.gte=30`;
+        `&popularity.gte=30` +
+        `&page=${page}`;
 
    const response = await fetch(endpoint, API_OPTIONS);
    if (!response.ok) {
