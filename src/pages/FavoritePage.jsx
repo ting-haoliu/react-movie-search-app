@@ -69,7 +69,7 @@ const FavoritePage = () => {
       <>
          <h2>Favorite</h2>
          {isLoading ? (
-            <Spinner />
+            <Spinner mt={12} />
          ) : movies.length === 0 ? (
             <p className="text-center text-white/50 mt-12">
                You have no favorite movies yet.

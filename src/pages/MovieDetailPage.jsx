@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../context/useAuth';
 
@@ -13,13 +13,14 @@ import {
 
 const MovieDetailPage = () => {
    const { id } = useParams();
+   const { user } = useAuth();
    const [movie, setMovie] = useState(null);
    const [cast, setCast] = useState([]);
    const [videos, setVideos] = useState([]);
    const [isLoading, setIsLoading] = useState(false);
    const [errorMessage, setErrorMessage] = useState('');
    const [isFavorite, setIsFavorite] = useState(false);
-   const { user } = useAuth();
+   const [isTogglingFavorite, setIsTogglingFavorite] = useState(false);
 
    // Page will scroll to top on load
    useEffect(() => {
@@ -50,6 +51,8 @@ const MovieDetailPage = () => {
          return;
       }
 
+      setIsTogglingFavorite(true);
+
       if (isFavorite) {
          // Remove from favorites
          const { error } = await supabase
@@ -70,6 +73,8 @@ const MovieDetailPage = () => {
 
          if (!error) setIsFavorite(true);
       }
+
+      setIsTogglingFavorite(false);
    };
 
    const loadMovieById = async (id) => {
@@ -115,24 +120,6 @@ const MovieDetailPage = () => {
                      {/* Header */}
                      <div className="flex justify-between items-center p-6 border-b border-gray-800 md:py-4 lg:py-2">
                         <h1 className="text-2xl m-0">{movie.title}</h1>
-                        <div className="flex gap-2">
-                           <button
-                              className={`px-4 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
-                                 isFavorite
-                                    ? 'bg-red-600 hover:bg-red-500'
-                                    : 'bg-gray-700 hover:bg-gray-600'
-                              }`}
-                              onClick={toggleFavorite}
-                           >
-                              {isFavorite ? 'Liked' : 'Like'}
-                           </button>
-                           <Link
-                              to="/"
-                              className="px-4 py-2 rounded-lg text-sm font-medium transition bg-indigo-600 hover:bg-indigo-500"
-                           >
-                              Go Back
-                           </Link>
-                        </div>
                      </div>
 
                      {/* Content */}
@@ -195,6 +182,33 @@ const MovieDetailPage = () => {
                                  ))}
                               </div>
                            )}
+
+                           <button
+                              className={`flex justify-center items-center text-lg transition-colors border-2 rounded-lg px-3 py-1 min-w-[5.5rem] ${
+                                 isFavorite
+                                    ? 'text-red-500 hover:text-red-400 border-red-500 hover:border-red-400'
+                                    : 'text-gray-400 hover:text-gray-200 border-gray-400 hover:border-gray-200'
+                              }`}
+                              onClick={toggleFavorite}
+                              aria-label={
+                                 isFavorite
+                                    ? 'Remove from favorites'
+                                    : 'Add to favorites'
+                              }
+                              disabled={isTogglingFavorite}
+                           >
+                              {isTogglingFavorite ? (
+                                 <Spinner width={5} height={5} />
+                              ) : (
+                                 <span className="text-lg">
+                                    {isFavorite ? '❤️' : '🤍'}
+                                 </span>
+                              )}
+
+                              <span className="ml-1">
+                                 {isFavorite ? 'Liked' : 'Like'}
+                              </span>
+                           </button>
                         </div>
                      </div>
                   </section>
