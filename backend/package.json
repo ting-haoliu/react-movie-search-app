@@ -1,0 +1,12 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Ting-Hao Liu <tinghaoliu1115@gmail.com> (https://github.com/ting-haoliu)",
+  "license": "ISC",
+  "description": ""
+}
