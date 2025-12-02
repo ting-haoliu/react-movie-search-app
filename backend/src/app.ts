@@ -14,6 +14,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Root route
+app.get('/', (req, res) => {
+   res.send('Movie API Server is running');
+});
+
 app.use('/api/auth', authRoutes);
 app.use('*', (req, res) => {
    res.status(404).json({ success: false, message: 'Route not found' });
