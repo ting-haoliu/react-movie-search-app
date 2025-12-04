@@ -4,10 +4,12 @@ import prisma from '../utils/prisma.js';
 export const createUser = async (
    email: string,
    password: string,
-   name: string
+   name?: string
 ): Promise<User> => {
    return prisma.user.create({
-      data: { email, password, name },
+      // The commented line below shows an alternative way to write the data object
+      // {email: email, password: password, name: name ?? null}
+      data: { email, password, name: name ?? null },
    });
 };
 

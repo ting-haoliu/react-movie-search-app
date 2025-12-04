@@ -4,29 +4,32 @@ import jwt from 'jsonwebtoken';
 import { createUser, findUserByEmail } from '../models/userModel.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
+
 if (!JWT_SECRET) {
    throw new Error('JWT_SECRET is not defined in environment variables');
 }
 
+// Token: { userId: number, iat: number, exp: number }
+const generateToken = (userId: number): string => {
+   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '1h' });
+};
+
 export const registerService = async (
    email: string,
    password: string,
-   name: string
+   name?: string
 ) => {
    const existingUser = await findUserByEmail(email);
+
    if (existingUser) {
       const error = new Error('User already exists');
-      (error as any).status = 409;
+      (error as any).status = 409; // Conflict
       throw error;
    }
 
    const hashedPassword = await bcrypt.hash(password, 10);
-
    const user = await createUser(email, hashedPassword, name);
-
-   const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
-      expiresIn: '1h',
-   });
+   const token = generateToken(user.id);
 
    return {
       token,
@@ -36,22 +39,22 @@ export const registerService = async (
 
 export const loginService = async (email: string, password: string) => {
    const user = await findUserByEmail(email);
+
    if (!user) {
       const error = new Error('Invalid email or password');
-      (error as any).status = 401;
+      (error as any).status = 401; // Unauthorized
       throw error;
    }
 
    const isMatch = await bcrypt.compare(password, user.password);
+
    if (!isMatch) {
       const error = new Error('Invalid email or password');
       (error as any).status = 401;
       throw error;
    }
 
-   const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
-      expiresIn: '1h',
-   });
+   const token = generateToken(user.id);
 
    return {
       token,
