@@ -2,8 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import authRoute from './routes/authRoute.js';
+import authRoutes from './routes/authRoutes.js';
+import favoriteRoutes from './routes/favoriteRoutes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import { register } from 'module';
+import { toggleFavorite } from './controllers/favoriteController.js';
 
 dotenv.config();
 
@@ -23,13 +26,18 @@ app.get('/', (req, res) => {
       success: true,
       message: 'Movie API Server',
       endpoints: {
+         register: 'POST /api/auth/register',
          login: 'POST /api/auth/login',
+         toggleFavorite: 'POST /api/favorites',
+         listFavorite: 'GET /api/favorites',
+         countFavorite: 'GET /api/favorites/count',
       },
    });
 });
 
 // API routes
-app.use('/api/auth', authRoute);
+app.use('/api/auth', authRoutes);
+app.use('/api/favorites', favoriteRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {
