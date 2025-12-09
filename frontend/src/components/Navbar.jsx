@@ -14,11 +14,12 @@ const Navbar = () => {
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
    const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-   const { user } = useAuth();
+   const { user, logout } = useAuth();
    const navigate = useNavigate();
 
    const handleSignOut = async () => {
       await signOut();
+      logout();
       setIsDropdownOpen(false);
 
       // redirect to home page after sign out

@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../context/useAuth';
+import {
+   getFavorites,
+   toggleFavorite as toggleFavoriteAPI,
+} from '../services/favorite';
 
 import Spinner from '../components/Spinner';
 
@@ -30,22 +33,24 @@ const MovieDetailPage = () => {
    // check the movie is in favorites
    useEffect(() => {
       const checkFavorite = async () => {
-         if (!user) return;
+         if (!user) {
+            setIsFavorite(false);
+            return;
+         }
 
-         const { data } = await supabase
-            .from('favorites')
-            .select('movie_id')
-            .eq('user_id', user.id)
-            .eq('movie_id', id)
-            .maybeSingle();
-
-         setIsFavorite(!!data);
+         try {
+            const favorites = await getFavorites();
+            const movieIds = favorites.map((fav) => fav.movieId);
+            setIsFavorite(movieIds.includes(Number(id)));
+         } catch (error) {
+            console.error('Check favorite error:', error);
+         }
       };
 
       checkFavorite();
    }, [user, id]);
 
-   const toggleFavorite = async () => {
+   const handleToggleFavorite = async () => {
       if (!user) {
          alert('Please log in to manage favorites.');
          return;
@@ -53,28 +58,15 @@ const MovieDetailPage = () => {
 
       setIsTogglingFavorite(true);
 
-      if (isFavorite) {
-         // Remove from favorites
-         const { error } = await supabase
-            .from('favorites')
-            .delete()
-            .eq('user_id', user.id)
-            .eq('movie_id', id);
-
-         if (!error) setIsFavorite(false);
-      } else {
-         // Add to favorites
-         const { error } = await supabase.from('favorites').insert([
-            {
-               user_id: user.id,
-               movie_id: id,
-            },
-         ]);
-
-         if (!error) setIsFavorite(true);
+      try {
+         const result = await toggleFavoriteAPI(Number(id));
+         setIsFavorite(result.isFavorite);
+      } catch (error) {
+         console.error('Toggle favorite error:', error);
+         alert('Failed to update favorite');
+      } finally {
+         setIsTogglingFavorite(false);
       }
-
-      setIsTogglingFavorite(false);
    };
 
    const loadMovieById = async (id) => {
@@ -189,7 +181,7 @@ const MovieDetailPage = () => {
                                     ? 'text-red-500 hover:text-red-400 border-red-500 hover:border-red-400'
                                     : 'text-gray-400 hover:text-gray-200 border-gray-400 hover:border-gray-200'
                               }`}
-                              onClick={toggleFavorite}
+                              onClick={handleToggleFavorite}
                               aria-label={
                                  isFavorite
                                     ? 'Remove from favorites'
