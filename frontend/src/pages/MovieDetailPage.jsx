@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+
 import { useAuth } from '../context/useAuth';
 import {
    getFavorites,
    toggleFavorite as toggleFavoriteAPI,
 } from '../services/favorite';
-
 import Spinner from '../components/Spinner';
 
 import {
@@ -52,7 +53,7 @@ const MovieDetailPage = () => {
 
    const handleToggleFavorite = async () => {
       if (!user) {
-         alert('Please log in to manage favorites.');
+         toast.error('Please log in to manage favorites.');
          return;
       }
 
@@ -64,9 +65,15 @@ const MovieDetailPage = () => {
 
          // Update favorite count in context
          updateFavoriteCount(result.isFavorite ? 1 : -1);
+
+         toast.success(
+            result.isFavorite
+               ? 'Added to favorites!'
+               : 'Removed from favorites!'
+         );
       } catch (error) {
          console.error('Toggle favorite error:', error);
-         alert('Failed to update favorite');
+         toast.error('Failed to update favorite');
       } finally {
          setIsTogglingFavorite(false);
       }

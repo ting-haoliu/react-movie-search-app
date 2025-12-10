@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 import { signIn } from '../services/auth';
 import { useAuth } from '../context/useAuth';
@@ -28,7 +29,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
          const result = await signIn(email, password);
 
          login(result.user);
-
+         toast.success('Successfully signed in!');
          onClose();
       } catch (err) {
          try {
@@ -49,7 +50,8 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
 
    const handleGoogleSignIn = () => {
       console.log('Google Sign-In clicked');
-      alert('Google Sign-In is not implemented yet.');
+
+      toast.error('Google Sign-In is not implemented yet.');
    };
 
    const handleDemoSignIn = async (e) => {
@@ -59,7 +61,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
          const result = await signIn('test@abc.com', '123456asdfgh');
 
          login(result.user);
-
+         toast.success('Successfully signed in as Demo User!');
          onClose();
       } catch (err) {
          try {

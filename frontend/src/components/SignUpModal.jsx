@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 import { signUp } from '../services/auth';
 import { useAuth } from '../context/useAuth';
@@ -31,7 +32,7 @@ const SignUpModal = ({ isOpen, onClose }) => {
          const result = await signUp(email, password, name);
 
          login(result.user);
-
+         toast.success('Account created successfully!');
          onClose();
       } catch (err) {
          try {

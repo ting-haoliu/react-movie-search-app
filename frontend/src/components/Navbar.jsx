@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { signOut } from '../services/auth';
 import { useAuth } from '../context/useAuth';
+import toast from 'react-hot-toast';
 
 import LoginModal from './LoginModal';
 import SignUpModal from './SignUpModal';
@@ -21,6 +22,7 @@ const Navbar = () => {
       await signOut();
       logout();
       setIsDropdownOpen(false);
+      toast.success('Signed out successfully');
 
       // redirect to home page after sign out
       navigate('/');
