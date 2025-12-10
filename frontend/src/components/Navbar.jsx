@@ -14,9 +14,8 @@ const Navbar = () => {
    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
    const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-   const { user, logout } = useAuth();
+   const { user, logout, favoriteCount } = useAuth();
    const navigate = useNavigate();
-
    const handleSignOut = async () => {
       await signOut();
       logout();
@@ -46,6 +45,9 @@ const Navbar = () => {
                   <Link to="/favorites" className="hover:text-red-400">
                      Favorites
                   </Link>
+                  <span className="ml-1 text-red-400 font-semibold">
+                     ({favoriteCount})
+                  </span>
                </li>
             )}
 

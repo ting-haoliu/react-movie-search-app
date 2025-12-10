@@ -16,7 +16,7 @@ import {
 
 const MovieDetailPage = () => {
    const { id } = useParams();
-   const { user } = useAuth();
+   const { user, updateFavoriteCount } = useAuth();
    const [movie, setMovie] = useState(null);
    const [cast, setCast] = useState([]);
    const [videos, setVideos] = useState([]);
@@ -61,6 +61,9 @@ const MovieDetailPage = () => {
       try {
          const result = await toggleFavoriteAPI(Number(id));
          setIsFavorite(result.isFavorite);
+
+         // Update favorite count in context
+         updateFavoriteCount(result.isFavorite ? 1 : -1);
       } catch (error) {
          console.error('Toggle favorite error:', error);
          alert('Failed to update favorite');
