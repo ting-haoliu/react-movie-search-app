@@ -49,6 +49,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
 
    const handleGoogleSignIn = () => {
       console.log('Google Sign-In clicked');
+      alert('Google Sign-In is not implemented yet.');
    };
 
    const handleDemoSignIn = async (e) => {

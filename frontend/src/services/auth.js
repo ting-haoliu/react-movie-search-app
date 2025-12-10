@@ -61,5 +61,24 @@ export const getCurrentUser = async () => {
       return null;
    }
 
-   return { token };
+   try {
+      const response = await fetch(`${API_URL}/auth/me`, {
+         headers: {
+            Authorization: `Bearer ${token}`,
+         },
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+         localStorage.removeItem('token');
+         return null;
+      }
+
+      return result.data; // { id, email, name }
+   } catch (error) {
+      console.error('Get current user error:', error);
+      localStorage.removeItem('token');
+      return null;
+   }
 };

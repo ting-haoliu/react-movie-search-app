@@ -16,6 +16,7 @@ const Navbar = () => {
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
    const { user, logout, favoriteCount } = useAuth();
    const navigate = useNavigate();
+
    const handleSignOut = async () => {
       await signOut();
       logout();
