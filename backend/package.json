@@ -2,7 +2,7 @@
   "name": "movie-search-backend",
   "version": "1.0.0",
   "type": "module",
-  "description": "Backend for Movie Search App",
+  "description": "Backend for Movie Search Application",
   "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
